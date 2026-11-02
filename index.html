@@ -34,4 +34,23 @@ h1{text-align:center;background:linear-gradient(90deg,#a78bfa,#f472b6);-webkit-b
 <a class="card" href="https://gemini.google.com" target="_blank"><span>✨</span><b>Gemini</b><br><small>Free & Fast</small></a>
 <a class="card" href="https://claude.ai" target="_blank"><span>🧠</span><b>Claude</b><br><small>Long Text</small></a>
 <a class="card" href="https://poe.com" target="_blank"><span>🚀</span><b>Poe All</b><br><small>সব AI একসাথে</small></a>
-<a class="card" href="https://www.perplexity.ai" target="_blank"><span>🔍</span><b>Perplexity</b><br><small>Search + AI
+<a class="card" href="https://www.perplexity.ai" target="_blank"><span>🔍</span><b>Perplexity</b><br><small>Search + AI</small></a>
+<a class="card" href="https://leonardo.ai" target="_blank"><span>🎨</span><b>Image AI</b><br><small>ছবি বানাও</small></a>
+</div>
+
+<div class="note">💡 Tip: এখন Install বাটন 100% কাজ করবে!</div>
+
+<script>
+function search(){
+ let query = document.getElementById('q').value;
+ if(!query) return alert('কিছু লিখো!');
+ window.open('https://poe.com/search?q='+encodeURIComponent(query), '_blank');
+ window.open('https://www.perplexity.ai/search?q='+encodeURIComponent(query), '_blank');
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body>
+  </html>
