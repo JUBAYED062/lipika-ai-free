@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lipika Free - All in One AI</title>
+<style>
+body{background:#0a0a0a;color:white;font-family:system-ui;padding:20px;max-width:800px;margin:auto}
+h1{text-align:center;background:linear-gradient(90deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin-top:25px}
+.card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:16px;padding:20px;text-align:center;text-decoration:none;color:white;transition:0.2s;display:block}
+.card:hover{transform:translateY(-5px);border-color:#a78bfa}
+.card span{font-size:32px;display:block;margin-bottom:8px}
+.search-box{margin:20px 0;display:flex;gap:10px}
+.search-box input{flex:1;padding:14px;border-radius:12px;border:none;background:#1f1f1f;color:white;outline:none;font-size:16px}
+.search-box button{padding:14px 20px;border-radius:12px;border:none;background:#a78bfa;color:black;font-weight:bold;cursor:pointer}
+.note{background:#1f1f1f;padding:15px;border-radius:12px;margin-top:25px;font-size:14px;color:#aaa;text-align:center}
+</style>
+</head>
+<body>
+<h1>Lipika Free ✨</h1>
+<p style="text-align:center;color:#888">jubayed062 এর নিজের All-in-One AI Workspace</p>
+
+<div class="search-box">
+<input id="q" placeholder="যা জানতে চাও লিখো...">
+<button onclick="search()">Ask All</button>
+</div>
+
+<div class="grid">
+<a class="card" href="https://chat.openai.com" target="_blank"><span>🤖</span><b>ChatGPT</b><br><small>Code & Writing</small></a>
+<a class="card" href="https://gemini.google.com" target="_blank"><span>✨</span><b>Gemini</b><br><small>Free & Fast</small></a>
+<a class="card" href="https://claude.ai" target="_blank"><span>🧠</span><b>Claude</b><br><small>Long Text</small></a>
+<a class="card" href="https://poe.com" target="_blank"><span>🚀</span><b>Poe All</b><br><small>সব AI একসাথে</small></a>
+<a class="card" href="https://www.perplexity.ai" target="_blank"><span>🔍</span><b>Perplexity</b><br><small>Search + AI</small></a>
+<a class="card" href="https://leonardo.ai" target="_blank"><span>🎨</span><b>Image AI</b><br><small>ছবি বানাও</small></a>
+</div>
+
+<div class="note">💡 Tip: Chrome দিয়ে ওপেন করে Add to Home Screen করলে অ্যাপের মতো ব্যবহার করতে পারবে।</div>
+
+<script>
+function search(){
+ let query = document.getElementById('q').value;
+ if(!query) return alert('কিছু লিখো!');
+ window.open('https://poe.com/search?q='+encodeURIComponent(query), '_blank');
+ window.open('https://www.perplexity.ai/search?q='+encodeURIComponent(query), '_blank');
+}
+</script>
+</body>
+</html>
