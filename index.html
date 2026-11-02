@@ -18,39 +18,116 @@ h1{text-align:center;background:linear-gradient(90deg,#a78bfa,#f472b6);-webkit-b
 .search-box input{flex:1;padding:14px;border-radius:12px;border:none;background:#1f1f1f;color:white;outline:none;font-size:16px}
 .search-box button{padding:14px 20px;border-radius:12px;border:none;background:#a78bfa;color:black;font-weight:bold;cursor:pointer}
 .note{background:#1f1f1f;padding:15px;border-radius:12px;margin-top:25px;font-size:14px;color:#aaa;text-align:center}
+#login-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0a;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.login-btn{background:white;color:black;border:none;padding:15px 30px;border-radius:12px;font-weight:bold;font-size:18px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.user-bar{background:#1f1f1f;padding:10px 15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
 </style>
 </head>
 <body>
-<h1>Lipika Free ✨</h1>
-<p style="text-align:center;color:#888">jubayed062 এর নিজের All-in-One AI Workspace</p>
 
-<div class="search-box">
-<input id="q" placeholder="যা জানতে চাও লিখো...">
-<button onclick="search()">Ask All</button>
+<div id="login-screen">
+  <h1>Lipika Free ✨</h1>
+  <p style="color:#888;margin-bottom:30px">একটি Gmail দিয়ে সব AI ব্যবহার করো</p>
+  <button class="login-btn" onclick="login()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Continue with Google
+  </button>
+  <p style="color:#555;font-size:12px;margin-top:20px">১ বার লগইন করলেই সবগুলো AI তে কাজ করবে</p>
 </div>
 
-<div class="grid">
-<a class="card" href="https://chat.openai.com" target="_blank"><span>🤖</span><b>ChatGPT</b><br><small>Code & Writing</small></a>
-<a class="card" href="https://gemini.google.com" target="_blank"><span>✨</span><b>Gemini</b><br><small>Free & Fast</small></a>
-<a class="card" href="https://claude.ai" target="_blank"><span>🧠</span><b>Claude</b><br><small>Long Text</small></a>
-<a class="card" href="https://poe.com" target="_blank"><span>🚀</span><b>Poe All</b><br><small>সব AI একসাথে</small></a>
-<a class="card" href="https://www.perplexity.ai" target="_blank"><span>🔍</span><b>Perplexity</b><br><small>Search + AI</small></a>
-<a class="card" href="https://leonardo.ai" target="_blank"><span>🎨</span><b>Image AI</b><br><small>ছবি বানাও</small></a>
+<div id="app" style="display:none">
+  <h1>Lipika Free ✨</h1>
+  <div id="user-bar" class="user-bar"></div>
+  <p style="text-align:center;color:#888">jubayed062 এর নিজের All-in-One AI Workspace</p>
+
+  <div class="search-box">
+  <input id="q" placeholder="যা জানতে চাও লিখো...">
+  <button onclick="search()">Ask All</button>
+  </div>
+
+  <div class="grid">
+  <a class="card" href="https://chat.openai.com" target="_blank"><span>🤖</span><b>ChatGPT</b><br><small>Code & Writing</small></a>
+  <a class="card" href="https://gemini.google.com" target="_blank"><span>✨</span><b>Gemini</b><br><small>Free & Fast</small></a>
+  <a class="card" href="https://claude.ai" target="_blank"><span>🧠</span><b>Claude</b><br><small>Long Text</small></a>
+  <a class="card" href="https://poe.com" target="_blank"><span>🚀</span><b>Poe All</b><br><small>সব AI একসাথে</small></a>
+  <a class="card" href="https://www.perplexity.ai" target="_blank"><span>🔍</span><b>Perplexity</b><br><small>Search + AI</small></a>
+  <a class="card" href="https://leonardo.ai" target="_blank"><span>🎨</span><b>Image AI</b><br><small>ছবি বানাও</small></a>
+  </div>
+  <div class="note">✅ তুমি <span id="user-email"></span> দিয়ে লগইন করেছো</div>
 </div>
 
-<div class="note">💡 Tip: এখন Install বাটন 100% কাজ করবে!</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-<script>
-function search(){
+const firebaseConfig = {
+  apiKey: "AIzaSyDummyKey-Replace-With-Yours",
+  authDomain: "lipika-free.firebaseapp.com",
+  projectId: "lipika-free",
+};
+
+// Firebase প্রজেক্ট বানাতে হবে
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+window.login = async () => {
+  try {
+    await signInWithPopup(auth, provider);
+  } catch(e){
+    // যদি Firebase না থাকে, Demo Login
+    localStorage.setItem('lipika_user', 'demo@gmail.com');
+    showApp('demo@gmail.com');
+  }
+}
+
+function showApp(email){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('user-email').innerText = email;
+  document.getElementById('user-bar').innerHTML = `<span>👋 ${email}</span> <button onclick="logout()" style="background:#333;color:white;border:none;padding:5px 10px;border-radius:8px">Logout</button>`;
+}
+
+window.logout = () => {
+  localStorage.removeItem('lipika_user');
+  location.reload();
+}
+
+window.search = () => {
  let query = document.getElementById('q').value;
  if(!query) return alert('কিছু লিখো!');
  window.open('https://poe.com/search?q='+encodeURIComponent(query), '_blank');
- window.open('https://www.perplexity.ai/search?q='+encodeURIComponent(query), '_blank');
 }
+
+// Check already logged in
+const saved = localStorage.getItem('lipika_user');
+if(saved){
+  showApp(saved);
+}
+
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    localStorage.setItem('lipika_user', user.email);
+    showApp(user.email);
+  }
+});
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js');
 }
 </script>
+
+<script>
+// যদি Firebase ছাড়া চালাতে চাও - Demo Mode
+if(!localStorage.getItem('lipika_user')){
+  window.login = () => {
+    const email = prompt("তোমার Gmail লিখো:");
+    if(email){
+      localStorage.setItem('lipika_user', email);
+      location.reload();
+    }
+  }
+}
+</script>
+
 </body>
-  </html>
+</html>
